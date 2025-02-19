@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Visitors</title>
+    <style>
+        #visitor-count {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Number of Active Visitors: <span id="visitor-count">0</span></h2>
+
+    <script>
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount') || 0;
+            count++;
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitor-count').textContent = count;
+
+            // Giảm số lượng khi rời trang
+            window.addEventListener("beforeunload", () => {
+                let currentCount = localStorage.getItem('visitorCount') || 0;
+                currentCount = Math.max(0, currentCount - 1);
+                localStorage.setItem('visitorCount', currentCount);
+            });
+        }
+
+        updateVisitorCount();
+    </script>
+</body>
+</html>
